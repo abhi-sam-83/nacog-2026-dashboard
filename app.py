@@ -9,6 +9,14 @@ def img_to_base64(path):
 
 PICS = {k: img_to_base64(f"pics/{k}.jpg") for k in ["denver_skyline","downtown","mountains","capitol","sunset","conference"]}
 
+# --- Load background slideshow images ---
+import glob
+bg_files = sorted(glob.glob("pics/backgrounds/*"))
+bg_base64 = [img_to_base64(f) for f in bg_files if f.lower().endswith((".jpg",".jpeg",".png"))]
+# fallback to existing pics if no backgrounds uploaded yet
+if not bg_base64:
+    bg_base64 = [PICS[k] for k in ["downtown","mountains","capitol","sunset","conference"]]
+
 st.set_page_config(page_title="NACOG 2026 Dashboard", layout="wide", page_icon="🎉")
 
 # --- Password Protection ---
@@ -46,6 +54,38 @@ if not check_password():
     st.stop()
 
 # --- Custom CSS + Animations ---
+
+# Background slideshow
+if bg_base64:
+    keyframes = ""
+    n = len(bg_base64)
+    step = 100 / n
+    for i, img in enumerate(bg_base64):
+        start = i * step
+        mid = start + step * 0.8
+        end = (i + 1) * step
+        keyframes += f"""
+        {start:.1f}% {{ background-image: url('data:image/jpeg;base64,{img}'); opacity:1; }}
+        {mid:.1f}% {{ background-image: url('data:image/jpeg;base64,{img}'); opacity:1; }}
+        {end:.1f}% {{ opacity:0.8; }}"""
+
+    duration = n * 8  # 8 seconds per image
+    st.markdown(f"""
+    <style>
+        .stApp::before {{
+            content: "";
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background-size: cover; background-position: center;
+            animation: bgSlide {duration}s infinite;
+            opacity: 0.12;
+            z-index: 0;
+            pointer-events: none;
+        }}
+        @keyframes bgSlide {{ {keyframes} }}
+        .stApp > * {{ position: relative; z-index: 1; }}
+    </style>
+    """, unsafe_allow_html=True)
+
 st.markdown("""
 <style>
     @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap');
