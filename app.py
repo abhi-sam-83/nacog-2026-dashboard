@@ -5,7 +5,7 @@ from styles import apply_styles
 from data_loader import get_data
 from charts import (render_kpis, render_row1, render_row2, render_payment,
                     render_hotel, render_travel, render_airport,
-                    render_row4, render_table)
+                    render_food, render_community, render_table)
 
 st.set_page_config(page_title="NACOG 2026 Dashboard", layout="wide", page_icon="🎉")
 
@@ -65,8 +65,12 @@ render_travel(fdf)
 render_airport(fdf)
 
 st.markdown(divider, unsafe_allow_html=True)
-st.markdown(section.format("🍽️ Food & Community"), unsafe_allow_html=True)
-render_row4(fdf)
+st.markdown(section.format("🍽️ Food & Meals"), unsafe_allow_html=True)
+render_food(fdf)
+
+st.markdown(divider, unsafe_allow_html=True)
+st.markdown(section.format("⛪ Community"), unsafe_allow_html=True)
+render_community(fdf)
 
 st.markdown(divider, unsafe_allow_html=True)
 render_table(fdf)

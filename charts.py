@@ -158,9 +158,9 @@ def render_travel(fdf):
     fig.update_layout(**CHART_LAYOUT, showlegend=False, bargap=0.4)
     st.plotly_chart(fig, use_container_width=True)
 
-def render_row4(fdf):
-    r4c1, r4c2 = st.columns(2)
-    with r4c1:
+def render_food(fdf):
+    c1, c2 = st.columns(2)
+    with c1:
         meal_cols = [c for c in fdf.columns if (c.lower().startswith("food: do you wish to add meal plan") or c.lower().startswith("food: do you wish to add a meal plan")) and "amount" not in c.lower()]
         meal = pd.concat([fdf[c].dropna() for c in meal_cols])
         unknown_count = len(fdf) - len(meal)
@@ -173,21 +173,42 @@ def render_row4(fdf):
         fig.update_traces(textinfo="value+label", textfont_size=11, textfont_color="#ffffff", marker=dict(line=dict(color="#1a1a2e", width=2)))
         fig.update_layout(**CHART_LAYOUT)
         st.plotly_chart(fig, use_container_width=True)
-    with r4c2:
-        ch = fdf["Church Name"].dropna()
-        ch = ch[ch.str.strip() != ""]
-        if len(ch) > 0:
-            cc = ch.value_counts().head(8).reset_index()
-            cc.columns = ["Church", "Count"]
-            fig = px.bar(cc, x="Count", y="Church", title="⛪ Top Churches", color="Church",
-                         color_discrete_sequence=COLORS, text_auto=True, orientation="h")
-            fig.update_traces(marker_line_width=0, textposition="inside", textfont=dict(color="#ffffff", size=13))
-            fig.update_layout(**CHART_LAYOUT, showlegend=False, bargap=0.35)
+    with c2:
+        day_cols = [c for c in fdf.columns if c.startswith("Select meal plan days")]
+        days = {}
+        for c in day_cols:
+            label = c.split("(")[-1].replace(")", "").strip()
+            if label not in days:
+                days[label] = 0
+            days[label] += (fdf[c] == "Yes").sum()
+        ddf = pd.DataFrame(list(days.items()), columns=["Day", "Count"])
+        ddf = ddf[ddf["Count"] > 0]
+        if len(ddf) > 0:
+            fig = px.bar(ddf, x="Day", y="Count", title="📅 Meal Plan Days", color="Day",
+                         color_discrete_sequence=COLORS, text_auto=True)
+            fig.update_traces(marker_line_width=0, textposition="outside")
+            fig.update_layout(**CHART_LAYOUT, showlegend=False, bargap=0.4)
         else:
             fig = go.Figure()
-            fig.update_layout(**CHART_LAYOUT, title="⛪ Top Churches",
+            fig.update_layout(**CHART_LAYOUT, title="📅 Meal Plan Days",
                               annotations=[dict(text="No data", showarrow=False, font=dict(size=16, color="#667eea"))])
         st.plotly_chart(fig, use_container_width=True)
+
+def render_community(fdf):
+    ch = fdf["Church Name"].dropna()
+    ch = ch[ch.str.strip() != ""]
+    if len(ch) > 0:
+        cc = ch.value_counts().head(8).reset_index()
+        cc.columns = ["Church", "Count"]
+        fig = px.bar(cc, x="Count", y="Church", title="⛪ Top Churches", color="Church",
+                     color_discrete_sequence=COLORS, text_auto=True, orientation="h")
+        fig.update_traces(marker_line_width=0, textposition="inside", textfont=dict(color="#ffffff", size=13))
+        fig.update_layout(**CHART_LAYOUT, showlegend=False, bargap=0.35)
+    else:
+        fig = go.Figure()
+        fig.update_layout(**CHART_LAYOUT, title="⛪ Top Churches",
+                          annotations=[dict(text="No data", showarrow=False, font=dict(size=16, color="#667eea"))])
+    st.plotly_chart(fig, use_container_width=True)
 
 def render_airport(fdf):
     st.markdown("### ✈️ Airport Logistics")
