@@ -175,7 +175,7 @@ def render_food(fdf):
         fig.update_layout(**CHART_LAYOUT)
         st.plotly_chart(fig, use_container_width=True)
     with c2:
-        day_cols = [c for c in fdf.columns if c.startswith("Select meal plan days")]
+        day_cols = [c for c in fdf.columns if c.startswith("Select meal plan days") and not c.endswith((".1", ".2"))]
         days = {}
         for c in day_cols:
             label = c.split("(")[-1].replace(")", "").strip()
