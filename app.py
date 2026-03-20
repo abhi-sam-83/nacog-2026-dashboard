@@ -7,7 +7,7 @@ import base64, pathlib
 def img_to_base64(path):
     return base64.b64encode(pathlib.Path(path).read_bytes()).decode()
 
-PICS = {k: img_to_base64(f"pics/{k}.jpg") for k in ["denver_skyline","downtown","mountains","capitol","sunset","conference"]}
+PICS = {k: img_to_base64(f"pics/{k}.jpg") for k in ["denver_skyline","mountains","conference"]}
 
 # --- Load background slideshow images ---
 import glob
@@ -326,42 +326,6 @@ with r2c2:
     fig.update_traces(marker_line_width=0, textposition="outside")
     fig.update_layout(**CHART_LAYOUT, showlegend=False, bargap=0.35)
     st.plotly_chart(fig, use_container_width=True)
-
-# --- Denver Photo Gallery ---
-st.markdown(f"""
-<div style="display:flex;gap:12px;margin-bottom:20px;">
-    <div style="flex:1;border-radius:14px;overflow:hidden;box-shadow:0 6px 20px rgba(0,0,0,0.12);" class="gallery-card">
-        <img src="data:image/jpeg;base64,{PICS['downtown']}"
-             style="width:100%;height:180px;object-fit:cover;" alt="Denver Downtown"/>
-        <div style="padding:10px 14px;background:linear-gradient(135deg,#1a1a2e,#302b63);">
-            <p style="color:#fff;margin:0;font-size:0.85rem;">🏙️ Downtown Denver</p>
-        </div>
-    </div>
-    <div style="flex:1;border-radius:14px;overflow:hidden;box-shadow:0 6px 20px rgba(0,0,0,0.12);" class="gallery-card">
-        <img src="data:image/jpeg;base64,{PICS['mountains']}"
-             style="width:100%;height:180px;object-fit:cover;" alt="Rocky Mountains"/>
-        <div style="padding:10px 14px;background:linear-gradient(135deg,#11998e,#38ef7d);">
-            <p style="color:#fff;margin:0;font-size:0.85rem;">🏔️ Rocky Mountains</p>
-        </div>
-    </div>
-    <div style="flex:1;border-radius:14px;overflow:hidden;box-shadow:0 6px 20px rgba(0,0,0,0.12);" class="gallery-card">
-        <img src="data:image/jpeg;base64,{PICS['capitol']}"
-             style="width:100%;height:180px;object-fit:cover;" alt="Colorado State Capitol"/>
-        <div style="padding:10px 14px;background:linear-gradient(135deg,#667eea,#764ba2);">
-            <p style="color:#fff;margin:0;font-size:0.85rem;">🏛️ Colorado Capitol</p>
-        </div>
-    </div>
-    <div style="flex:1;border-radius:14px;overflow:hidden;box-shadow:0 6px 20px rgba(0,0,0,0.12);" class="gallery-card">
-        <img src="data:image/jpeg;base64,{PICS['sunset']}"
-             style="width:100%;height:180px;object-fit:cover;" alt="Denver Sunset"/>
-        <div style="padding:10px 14px;background:linear-gradient(135deg,#f5576c,#fa709a);">
-            <p style="color:#fff;margin:0;font-size:0.85rem;">🌅 Colorado Sunset</p>
-        </div>
-    </div>
-</div>
-""", unsafe_allow_html=True)
-
-st.markdown('<div class="section-divider"></div>', unsafe_allow_html=True)
 
 # --- Row 3 ---
 r3c1, r3c2 = st.columns(2)
