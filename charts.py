@@ -64,7 +64,7 @@ def render_row1(fdf):
 def render_row2(fdf):
     r2c1, r2c2, r2c3 = st.columns(3)
     with r2c1:
-        a = fdf["Age Group"].value_counts().reset_index()
+        a = fdf["Age Group"].fillna("Unknown").value_counts().reset_index()
         a.columns = ["Age Group", "Count"]
         fig = px.bar(a, x="Count", y="Age Group", title="📊 Age Groups", color="Age Group",
                      color_discrete_sequence=COLORS, text_auto=True, orientation="h")
