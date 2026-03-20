@@ -198,10 +198,10 @@ def render_community(fdf):
     if len(ch) > 0:
         cc = ch.value_counts().head(8).reset_index()
         cc.columns = ["Church", "Count"]
-        fig = px.bar(cc, x="Count", y="Church", title="⛪ Top Churches", color="Church",
-                     color_discrete_sequence=COLORS, text_auto=True, orientation="h")
-        fig.update_traces(marker_line_width=0, textposition="inside", textfont=dict(color="#ffffff", size=13))
-        fig.update_layout(**CHART_LAYOUT, showlegend=False, bargap=0.35)
+        fig = px.bar(cc, x="Church", y="Count", title="⛪ Top Churches", color="Church",
+                     color_discrete_sequence=COLORS, text_auto=True)
+        fig.update_traces(marker_line_width=0, textposition="outside", textfont=dict(color="#ffffff", size=13))
+        fig.update_layout(**CHART_LAYOUT, showlegend=False, bargap=0.3, xaxis_tickangle=-45, height=350)
     else:
         fig = go.Figure()
         fig.update_layout(**CHART_LAYOUT, title="⛪ Top Churches",
