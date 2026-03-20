@@ -126,7 +126,9 @@ def render_row3(fdf):
 def render_row4(fdf):
     r4c1, r4c2, r4c3 = st.columns(3)
     with r4c1:
-        m = fdf["Food: Do you wish to add a meal plan?"].value_counts().reset_index()
+        meal_cols = [c for c in fdf.columns if c.lower().startswith("food: do you wish to add meal plan") or c.lower().startswith("food: do you wish to add a meal plan")]
+        meal = pd.concat([fdf[c].dropna() for c in meal_cols])
+        m = meal.value_counts().reset_index()
         m.columns = ["Meal Plan", "Count"]
         fig = px.pie(m, names="Meal Plan", values="Count", title="🍽️ Meal Plan",
                      color_discrete_sequence=COLORS, hole=0.55)
