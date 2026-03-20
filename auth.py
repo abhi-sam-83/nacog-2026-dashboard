@@ -18,7 +18,7 @@ def check_password():
             14%,25%  { background-image: url('https://images.unsplash.com/photo-1501594907352-04cda38ebc29?w=1600&q=80'); }
             28%,39%  { background-image: url('https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?w=1600&q=80'); }
             42%,53%  { background-image: url('https://images.unsplash.com/photo-1508739773434-c26b3d09e071?w=1600&q=80'); }
-            56%,67%  { background-image: url('https://images.unsplash.com/photo-1474511320723-9a56873571b7?w=1600&q=80'); }
+            56%,67%  { background-image: url('https://images.unsplash.com/photo-1529439322271-42931c09bce1?w=1600&q=80'); }
             70%,81%  { background-image: url('https://images.unsplash.com/photo-1444464666168-49d633b86797?w=1600&q=80'); }
             84%,95%  { background-image: url('https://images.unsplash.com/photo-1518709766631-a6a7f45921c3?w=1600&q=80'); }
             98%,100% { background-image: url('https://images.unsplash.com/photo-1546587348-d12660c30c50?w=1600&q=80'); }
