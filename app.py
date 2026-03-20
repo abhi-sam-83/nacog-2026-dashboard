@@ -375,6 +375,133 @@ with r3c3:
     fig.update_layout(**CHART_LAYOUT, showlegend=False, bargap=0.4)
     st.plotly_chart(fig, use_container_width=True)
 
+# --- Row 4: Meal Plan + Dietary + Church ---
+st.markdown('<div class="section-divider"></div>', unsafe_allow_html=True)
+r4c1, r4c2, r4c3 = st.columns(3)
+
+with r4c1:
+    meal = fdf["Food: Do you wish to add a meal plan?"].value_counts().reset_index()
+    meal.columns = ["Meal Plan", "Count"]
+    fig = px.pie(meal, names="Meal Plan", values="Count", title="🍽️ Meal Plan",
+                 color_discrete_sequence=COLORS, hole=0.55)
+    fig.update_traces(textinfo="percent+label", textfont_size=11,
+                      marker=dict(line=dict(color="#1a1a2e", width=2)))
+    fig.update_layout(**CHART_LAYOUT)
+    st.plotly_chart(fig, use_container_width=True)
+
+with r4c2:
+    diet = fdf["Any dietary restrictions?"].dropna()
+    diet = diet[diet.str.strip() != ""]
+    if len(diet) > 0:
+        diet_counts = diet.value_counts().head(8).reset_index()
+        diet_counts.columns = ["Restriction", "Count"]
+        fig = px.bar(diet_counts, x="Count", y="Restriction", title="🥗 Dietary Restrictions",
+                     color="Restriction", color_discrete_sequence=COLORS, text_auto=True, orientation="h")
+        fig.update_traces(marker_line_width=0, textposition="outside")
+        fig.update_layout(**CHART_LAYOUT, showlegend=False, bargap=0.35)
+    else:
+        fig = go.Figure()
+        fig.update_layout(**CHART_LAYOUT, title="🥗 Dietary Restrictions",
+                          annotations=[dict(text="No data", showarrow=False, font=dict(size=16, color="#667eea"))])
+    st.plotly_chart(fig, use_container_width=True)
+
+with r4c3:
+    church = fdf["Church Name"].dropna()
+    church = church[church.str.strip() != ""]
+    if len(church) > 0:
+        church_counts = church.value_counts().head(8).reset_index()
+        church_counts.columns = ["Church", "Count"]
+        fig = px.bar(church_counts, x="Count", y="Church", title="⛪ Top Churches",
+                     color="Church", color_discrete_sequence=COLORS, text_auto=True, orientation="h")
+        fig.update_traces(marker_line_width=0, textposition="outside")
+        fig.update_layout(**CHART_LAYOUT, showlegend=False, bargap=0.35)
+    else:
+        fig = go.Figure()
+        fig.update_layout(**CHART_LAYOUT, title="⛪ Top Churches",
+                          annotations=[dict(text="No data", showarrow=False, font=dict(size=16, color="#667eea"))])
+    st.plotly_chart(fig, use_container_width=True)
+
+# --- Row 5: Hotel Nights Heatmap + Room Types + Children ---
+r5c1, r5c2, r5c3 = st.columns(3)
+
+with r5c1:
+    night_cols = [c for c in fdf.columns if c.startswith("Nights Staying in the Hotel")]
+    if night_cols:
+        nights = {}
+        for c in night_cols:
+            day = c.split("(")[-1].replace(")", "").strip()
+            nights[day] = fdf[c].notna().sum() - (fdf[c] == "").sum()
+        nights_df = pd.DataFrame(list(nights.items()), columns=["Night", "Bookings"])
+        nights_df = nights_df[nights_df["Bookings"] > 0]
+        fig = px.bar(nights_df, x="Night", y="Bookings", title="🌙 Hotel Nights Booked",
+                     color="Bookings", color_continuous_scale=["#667eea", "#f5576c"], text_auto=True)
+        fig.update_traces(textposition="outside")
+        fig.update_layout(**CHART_LAYOUT, showlegend=False, coloraxis_showscale=False)
+        st.plotly_chart(fig, use_container_width=True)
+
+with r5c2:
+    room_pref = fdf["Room 1 Preference"].dropna()
+    room_pref = room_pref[room_pref.str.strip() != ""]
+    if len(room_pref) > 0:
+        room_counts = room_pref.value_counts().reset_index()
+        room_counts.columns = ["Room Type", "Count"]
+        fig = px.pie(room_counts, names="Room Type", values="Count", title="🛏️ Room Preference",
+                     color_discrete_sequence=COLORS, hole=0.55)
+        fig.update_traces(textinfo="percent+label", textfont_size=11,
+                          marker=dict(line=dict(color="#1a1a2e", width=2)))
+        fig.update_layout(**CHART_LAYOUT)
+    else:
+        fig = go.Figure()
+        fig.update_layout(**CHART_LAYOUT, title="🛏️ Room Preference",
+                          annotations=[dict(text="No data", showarrow=False, font=dict(size=16, color="#667eea"))])
+    st.plotly_chart(fig, use_container_width=True)
+
+with r5c3:
+    children = fdf[fdf["Which sessions would you like to attend? (Childrens Session)"].eq("Yes")]
+    child_ages = children["Age of the Child"].dropna()
+    child_ages = child_ages[child_ages.str.strip() != ""]
+    fig = go.Figure()
+    if len(child_ages) > 0:
+        age_counts = child_ages.value_counts().reset_index()
+        age_counts.columns = ["Age", "Count"]
+        fig = px.bar(age_counts, x="Age", y="Count", title=f"👶 Children ({len(children)})",
+                     color="Age", color_discrete_sequence=COLORS, text_auto=True)
+        fig.update_traces(marker_line_width=0, textposition="outside")
+        fig.update_layout(**CHART_LAYOUT, showlegend=False, bargap=0.4)
+    else:
+        fig.update_layout(**CHART_LAYOUT, title=f"👶 Children ({len(children)})",
+                          annotations=[dict(text=f"{len(children)} registered", showarrow=False, font=dict(size=16, color="#667eea"))])
+    st.plotly_chart(fig, use_container_width=True)
+
+# --- Airport Logistics Table ---
+st.markdown('<div class="section-divider"></div>', unsafe_allow_html=True)
+st.markdown("### ✈️ Airport Logistics")
+
+pickup_df = fdf[fdf["Do you need airport pickup?"].eq("Yes")][
+    ["Full Name", "Pickup Airport", "Arrival Date", "Arrival Time", "Arrival Airline", "Arrival Flight #"]
+].dropna(subset=["Arrival Date"])
+
+dropoff_df = fdf[fdf["Do you need airport drop off?"].eq("Yes")][
+    ["Full Name", "Drop Off Airport", "Departure Date", "Departure Time", "Departure Airline", "Departure Flight #"]
+].dropna(subset=["Departure Date"])
+
+ac1, ac2 = st.columns(2)
+with ac1:
+    st.markdown(f"**🛬 Pickups ({len(pickup_df)})**")
+    if len(pickup_df) > 0:
+        html_pickup = pickup_df.to_html(index=False, escape=True, classes="reg-table")
+        st.markdown(f'<div style="max-height:250px;overflow-y:auto;border-radius:8px;border:1px solid #1a1a3a;">{html_pickup}</div>', unsafe_allow_html=True)
+    else:
+        st.markdown("No pickup requests")
+
+with ac2:
+    st.markdown(f"**🛫 Drop-offs ({len(dropoff_df)})**")
+    if len(dropoff_df) > 0:
+        html_dropoff = dropoff_df.to_html(index=False, escape=True, classes="reg-table")
+        st.markdown(f'<div style="max-height:250px;overflow-y:auto;border-radius:8px;border:1px solid #1a1a3a;">{html_dropoff}</div>', unsafe_allow_html=True)
+    else:
+        st.markdown("No drop-off requests")
+
 # --- Registrant Table ---
 st.markdown('<div class="section-divider"></div>', unsafe_allow_html=True)
 st.markdown("### 📋 Registrant Details")
