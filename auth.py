@@ -69,20 +69,20 @@ def check_password():
     <div style="display:flex;justify-content:center;align-items:center;min-height:75vh;">
         <div class="login-card" style="background:rgba(10,10,30,0.88);backdrop-filter:blur(24px);-webkit-backdrop-filter:blur(24px);
                     padding:0;border-radius:24px;text-align:center;
-                    box-shadow:0 25px 70px rgba(0,0,0,0.5);max-width:440px;width:100%;
+                    box-shadow:0 25px 70px rgba(0,0,0,0.5);max-width:360px;width:100%;
                     border:1px solid rgba(102,126,234,0.2);overflow:hidden;">
-            <div style="padding:40px 45px 10px;">
-                <div class="login-emoji" style="font-size:4.5rem;margin-bottom:14px;">📊</div>
-                <h1 class="shimmer-title" style="margin:0 0 10px;font-size:3rem;font-weight:800;">NACOG 2026</h1>
-                <p class="shimmer-sub" style="margin:0 0 12px;font-size:1.5rem;font-weight:600;letter-spacing:2px;">✦ Conference Dashboard ✦</p>
-                <div style="display:flex;align-items:center;justify-content:center;gap:10px;margin:10px 0 5px;animation:float 4s ease-in-out infinite;">
-                    <span style="color:#f5576c;font-size:1.5rem;animation:sparkle 2s ease-in-out infinite;">✈</span>
-                    <p style="color:#e0e0f0;margin:0;font-size:1.2rem;letter-spacing:1px;">📍 Denver, Colorado &nbsp;•&nbsp; July 2026</p>
-                    <span style="color:#fee140;font-size:1.5rem;animation:sparkle 2s ease-in-out 0.5s infinite;">⛰</span>
+            <div style="padding:25px 30px 8px;">
+                <div class="login-emoji" style="font-size:3rem;margin-bottom:8px;">📊</div>
+                <h1 class="shimmer-title" style="margin:0 0 6px;font-size:2.2rem;font-weight:800;">NACOG 2026</h1>
+                <p class="shimmer-sub" style="margin:0 0 8px;font-size:1.1rem;font-weight:600;letter-spacing:2px;">✦ Conference Dashboard ✦</p>
+                <div style="display:flex;align-items:center;justify-content:center;gap:8px;margin:6px 0 3px;animation:float 4s ease-in-out infinite;">
+                    <span style="color:#f5576c;font-size:1.1rem;animation:sparkle 2s ease-in-out infinite;">✈</span>
+                    <p style="color:#e0e0f0;margin:0;font-size:0.9rem;letter-spacing:1px;">📍 Denver, CO &nbsp;•&nbsp; July 2026</p>
+                    <span style="color:#fee140;font-size:1.1rem;animation:sparkle 2s ease-in-out 0.5s infinite;">⛰</span>
                 </div>
             </div>
             <div class="login-divider"></div>
-            <div style="padding:15px 45px 30px;">
+            <div style="padding:10px 30px 20px;">
                 <p style="color:#c0c0e0;font-size:0.8rem;margin:0 0 8px;letter-spacing:0.5px;">🔒 AUTHORIZED ACCESS ONLY</p>
             </div>
         </div>
