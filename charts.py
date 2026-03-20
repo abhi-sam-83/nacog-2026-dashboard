@@ -9,9 +9,10 @@ CHART_LAYOUT = dict(
     template="plotly_dark",
     paper_bgcolor="rgba(0,0,0,0)",
     plot_bgcolor="rgba(18,18,42,0.5)",
-    font=dict(family="Inter", color="#e0e0f0"),
+    font=dict(family="Inter", color="#ffffff"),
     margin=dict(l=10, r=10, t=40, b=10),
     title_font=dict(size=14, color="#ffffff"),
+    legend=dict(font=dict(color="#ffffff")),
     height=280,
 )
 
@@ -177,7 +178,7 @@ def render_row5(fdf):
             fig = px.pie(rc, names="Room Type", values="Count", title="🛏️ Room Preference",
                          color_discrete_sequence=COLORS, hole=0.55)
             fig.update_traces(textinfo="value+label", textfont_size=11, textfont_color="#ffffff", marker=dict(line=dict(color="#1a1a2e", width=2)))
-            fig.update_layout(**CHART_LAYOUT)
+            fig.update_layout(**CHART_LAYOUT, legend=dict(font=dict(color="#ffffff")))
         else:
             fig = go.Figure()
             fig.update_layout(**CHART_LAYOUT, title="🛏️ Room Preference",
