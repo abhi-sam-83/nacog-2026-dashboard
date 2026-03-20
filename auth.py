@@ -69,7 +69,7 @@ def check_password():
         .letter { display:inline-block; animation: letterPop 0.6s ease-out both; }
     </style>
     <div style="text-align:center;padding-top:6vh;animation:fadeInUp 1s ease-out;">
-        <div style="animation:pulse 2.5s ease-in-out infinite;display:inline-block;font-size:4rem;margin-bottom:5px;">📊</div>
+        <div style="animation:pulse 2.5s ease-in-out infinite;display:inline-block;font-size:4rem;margin-bottom:5px;">⛪</div>
         <div>
             <svg viewBox="0 0 500 120" style="width:80%;max-width:700px;margin:0 auto;filter:drop-shadow(0 4px 30px rgba(0,0,0,0.8));">
                 <defs>
