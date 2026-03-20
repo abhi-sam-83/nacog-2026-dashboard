@@ -155,8 +155,8 @@ def render_travel(fdf):
     p = pd.concat([p[p["Pickup"] != "Unknown"], p[p["Pickup"] == "Unknown"]])
     fig = px.bar(p, x="Pickup", y="Count", title="✈️ Airport Pickup", color="Pickup",
                  color_discrete_sequence=COLORS, text_auto=True)
-    fig.update_traces(marker_line_width=0, textposition="outside")
-    fig.update_layout(**CHART_LAYOUT, showlegend=False, bargap=0.4)
+    fig.update_traces(marker_line_width=0, textposition="outside", width=0.3)
+    fig.update_layout(**CHART_LAYOUT, showlegend=False, bargap=0.6)
     st.plotly_chart(fig, use_container_width=True)
 
 def render_food(fdf):
@@ -203,8 +203,8 @@ def render_community(fdf):
         cc.columns = ["Church", "Count"]
         fig = px.bar(cc, x="Church", y="Count", title="⛪ Top Churches", color="Church",
                      color_discrete_sequence=COLORS, text_auto=True)
-        fig.update_traces(marker_line_width=0, textposition="outside", textfont=dict(color="#ffffff", size=13))
-        fig.update_layout(**{**CHART_LAYOUT, "height": 350}, showlegend=False, bargap=0.3, xaxis_tickangle=-45)
+        fig.update_traces(marker_line_width=0, textposition="outside", textfont=dict(color="#ffffff", size=13), width=0.4)
+        fig.update_layout(**{**CHART_LAYOUT, "height": 350}, showlegend=False, bargap=0.5, xaxis_tickangle=-45)
     else:
         fig = go.Figure()
         fig.update_layout(**CHART_LAYOUT, title="⛪ Top Churches",
