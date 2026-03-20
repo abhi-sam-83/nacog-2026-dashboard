@@ -14,14 +14,17 @@ def check_password():
         @keyframes glow { 0%,100% { text-shadow:0 0 20px rgba(102,126,234,0.5); } 50% { text-shadow:0 0 40px rgba(102,126,234,0.8), 0 0 80px rgba(245,87,108,0.4); } }
         @keyframes sparkle { 0%,100% { opacity:0.4; } 50% { opacity:1; } }
         @keyframes bgCrossfade {
-            0%,11%   { background-image: url('https://images.unsplash.com/photo-1546587348-d12660c30c50?w=1600&q=80'); }
-            14%,25%  { background-image: url('https://images.unsplash.com/photo-1501594907352-04cda38ebc29?w=1600&q=80'); }
-            28%,39%  { background-image: url('https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?w=1600&q=80'); }
-            42%,53%  { background-image: url('https://images.unsplash.com/photo-1508739773434-c26b3d09e071?w=1600&q=80'); }
-            56%,67%  { background-image: url('https://images.unsplash.com/photo-1529439322271-42931c09bce1?w=1600&q=80'); }
-            70%,81%  { background-image: url('https://images.unsplash.com/photo-1444464666168-49d633b86797?w=1600&q=80'); }
-            84%,95%  { background-image: url('https://images.unsplash.com/photo-1518709766631-a6a7f45921c3?w=1600&q=80'); }
-            98%,100% { background-image: url('https://images.unsplash.com/photo-1546587348-d12660c30c50?w=1600&q=80'); }
+            0%,8%    { background-image: url('https://images.unsplash.com/photo-1546587348-d12660c30c50?w=1600&q=80'); }
+            10%,18%  { background-image: url('https://images.unsplash.com/photo-1501594907352-04cda38ebc29?w=1600&q=80'); }
+            20%,28%  { background-image: url('https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?w=1600&q=80'); }
+            30%,38%  { background-image: url('https://images.unsplash.com/photo-1508739773434-c26b3d09e071?w=1600&q=80'); }
+            40%,48%  { background-image: url('https://images.unsplash.com/photo-1529439322271-42931c09bce1?w=1600&q=80'); }
+            50%,58%  { background-image: url('https://images.unsplash.com/photo-1444464666168-49d633b86797?w=1600&q=80'); }
+            60%,68%  { background-image: url('https://images.unsplash.com/photo-1518709766631-a6a7f45921c3?w=1600&q=80'); }
+            70%,78%  { background-image: url('https://images.unsplash.com/photo-1500534314209-a25ddb2bd429?w=1600&q=80'); }
+            80%,88%  { background-image: url('https://images.unsplash.com/photo-1470071459604-3b5ec3a7fe05?w=1600&q=80'); }
+            90%,98%  { background-image: url('https://images.unsplash.com/photo-1441974231531-c6227db76b6e?w=1600&q=80'); }
+            100%     { background-image: url('https://images.unsplash.com/photo-1546587348-d12660c30c50?w=1600&q=80'); }
         }
         .stApp {
             background-size:cover !important; background-position:center !important;
@@ -65,15 +68,37 @@ def check_password():
         @keyframes breathe { 0%,100% { letter-spacing:8px; } 50% { letter-spacing:14px; } }
         .letter { display:inline-block; animation: letterPop 0.6s ease-out both; }
     </style>
-    <div style="text-align:center;padding-top:10vh;animation:fadeInUp 1s ease-out;">
-        <div style="animation:pulse 2.5s ease-in-out infinite;display:inline-block;font-size:4rem;margin-bottom:10px;">📊</div>
-        <h1 style="font-size:5rem;font-weight:900;margin:0;text-shadow:0 4px 40px rgba(0,0,0,0.8),0 0 80px rgba(102,126,234,0.4);">
-            <span class="letter" style="color:#667eea;animation-delay:0.1s;">N</span><span class="letter" style="color:#f5576c;animation-delay:0.15s;">A</span><span class="letter" style="color:#00b09b;animation-delay:0.2s;">C</span><span class="letter" style="color:#fee140;animation-delay:0.25s;">O</span><span class="letter" style="color:#fa709a;animation-delay:0.3s;">G</span><span style="color:#fff;"> </span><span class="letter" style="color:#4facfe;animation-delay:0.4s;">2</span><span class="letter" style="color:#96c93d;animation-delay:0.45s;">0</span><span class="letter" style="color:#764ba2;animation-delay:0.5s;">2</span><span class="letter" style="color:#f5576c;animation-delay:0.55s;">6</span>
-        </h1>
-        <p style="font-size:1.8rem;font-weight:700;letter-spacing:6px;margin:12px 0;color:#fff;
-                  text-shadow:0 2px 20px rgba(0,0,0,0.8);animation:breathe 4s ease-in-out infinite;">
-            ✦ CONFERENCE DASHBOARD ✦</p>
-        <div style="display:flex;align-items:center;justify-content:center;gap:12px;margin:16px 0;animation:float 4s ease-in-out infinite;">
+    <div style="text-align:center;padding-top:6vh;animation:fadeInUp 1s ease-out;">
+        <div style="animation:pulse 2.5s ease-in-out infinite;display:inline-block;font-size:4rem;margin-bottom:5px;">📊</div>
+        <div>
+            <svg viewBox="0 0 500 120" style="width:80%;max-width:700px;margin:0 auto;filter:drop-shadow(0 4px 30px rgba(0,0,0,0.8));">
+                <defs>
+                    <path id="curve" d="M 30,90 Q 250,10 470,90" fill="transparent"/>
+                    <linearGradient id="rainbow" x1="0%" y1="0%" x2="100%" y2="0%">
+                        <stop offset="0%" style="stop-color:#667eea"/>
+                        <stop offset="20%" style="stop-color:#f5576c"/>
+                        <stop offset="40%" style="stop-color:#00b09b"/>
+                        <stop offset="60%" style="stop-color:#fee140"/>
+                        <stop offset="80%" style="stop-color:#fa709a"/>
+                        <stop offset="100%" style="stop-color:#4facfe"/>
+                    </linearGradient>
+                </defs>
+                <text font-size="58" font-weight="900" fill="url(#rainbow)" font-family="Inter,sans-serif">
+                    <textPath href="#curve" startOffset="50%" text-anchor="middle">NACOG 2026</textPath>
+                </text>
+            </svg>
+        </div>
+        <div>
+            <svg viewBox="0 0 600 70" style="width:75%;max-width:650px;margin:-10px auto 0;filter:drop-shadow(0 2px 15px rgba(0,0,0,0.7));">
+                <defs>
+                    <path id="curve2" d="M 30,15 Q 300,60 570,15" fill="transparent"/>
+                </defs>
+                <text font-size="22" font-weight="700" fill="#ffffff" letter-spacing="4" font-family="Inter,sans-serif">
+                    <textPath href="#curve2" startOffset="50%" text-anchor="middle">✦ CONFERENCE DASHBOARD ✦</textPath>
+                </text>
+            </svg>
+        </div>
+        <div style="display:flex;align-items:center;justify-content:center;gap:12px;margin:10px 0;animation:float 4s ease-in-out infinite;">
             <span style="color:#f5576c;font-size:2rem;animation:sparkle 2s ease-in-out infinite;">✈</span>
             <p style="color:#ffffff;margin:0;font-size:1.3rem;letter-spacing:2px;font-weight:600;
                       text-shadow:0 2px 20px rgba(0,0,0,0.9);">📍 Denver, Colorado &nbsp;•&nbsp; July 2026</p>
