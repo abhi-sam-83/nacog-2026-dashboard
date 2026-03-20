@@ -56,27 +56,8 @@ if not check_password():
 # --- Custom CSS + Animations ---
 
 # Background slideshow
-# Background slideshow
-if bg_base64:
-    st.markdown(f"""
-    <style>
-        .stApp::before {{
-            content: "";
-            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-            background: url('data:image/jpeg;base64,{bg_base64[0]}') center/cover no-repeat;
-            opacity: 0.03;
-            z-index: 0;
-            pointer-events: none;
-        }}
-        .stApp > * {{ position: relative; z-index: 1; }}
-        .block-container {{
-            background: rgba(255,255,255,0.95);
-            border-radius: 16px;
-            padding: 1.5rem 2rem !important;
-            backdrop-filter: blur(10px);
-        }}
-    </style>
-    """, unsafe_allow_html=True)
+# Background - disabled
+st.markdown("")
 
 st.markdown("""
 <style>
@@ -233,14 +214,6 @@ st.markdown(f"""
 
 # --- Sidebar ---
 with st.sidebar:
-    st.markdown(f"""
-    <div style="border-radius:12px;overflow:hidden;margin-bottom:15px;box-shadow:0 4px 15px rgba(0,0,0,0.2);">
-        <img src="data:image/jpeg;base64,{bg_base64[0]}" style="width:100%;height:120px;object-fit:cover;"/>
-        <div style="padding:8px 12px;background:linear-gradient(135deg,#667eea,#764ba2);text-align:center;">
-            <p style="color:#fff;margin:0;font-size:0.8rem;">📍 Denver, Colorado</p>
-        </div>
-    </div>
-    """, unsafe_allow_html=True)
     st.markdown("## 🎛️ Filters")
     st.markdown("---")
     statuses = st.multiselect("📌 Status", df["Status"].dropna().unique(), default=df["Status"].dropna().unique())
