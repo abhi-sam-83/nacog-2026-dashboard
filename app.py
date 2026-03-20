@@ -103,6 +103,15 @@ st.markdown("""
     [data-testid="stTable"] { color: #ffffff !important; }
     .stAlert p { color: #ffffff !important; }
 
+    /* Dataframe / Table */
+    [data-testid="stDataFrame"] * { color: #ffffff !important; }
+    [data-testid="stDataFrame"] input { color: #ffffff !important; background: #1a1a3a !important; border: 1px solid #667eea !important; }
+    [data-testid="stDataFrame"] button { color: #ffffff !important; }
+    [data-testid="stDataFrame"] svg { fill: #ffffff !important; }
+    [data-testid="stDataFrame"] [data-testid="glideDataEditor"] { background: #0a0a1a !important; }
+    .stDataFrame th, .stDataFrame td { color: #ffffff !important; background: #12122a !important; }
+    [data-testid="stDataFrame"] input::placeholder { color: #a0a0c0 !important; }
+
     .metric-card {
         padding: 22px 18px; border-radius: 16px; color: white; text-align: center;
         box-shadow: 0 8px 32px rgba(0,0,0,0.3);
