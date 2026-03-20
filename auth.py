@@ -67,7 +67,7 @@ def check_password():
         .stTextInput input::placeholder { color: #a0a0c0 !important; }
     </style>
     <div style="display:flex;justify-content:center;align-items:center;min-height:75vh;">
-        <div class="login-card" style="background:rgba(20,20,50,0.6);backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);
+        <div class="login-card" style="background:rgba(10,10,30,0.88);backdrop-filter:blur(24px);-webkit-backdrop-filter:blur(24px);
                     padding:0;border-radius:24px;text-align:center;
                     box-shadow:0 25px 70px rgba(0,0,0,0.5);max-width:440px;width:100%;
                     border:1px solid rgba(102,126,234,0.2);overflow:hidden;">
