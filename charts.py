@@ -220,10 +220,10 @@ def render_airport(fdf):
     st.markdown("### ✈️ Airport Logistics")
     pickup_df = fdf[fdf["Do you need airport pickup?"].eq("Yes")][
         ["Full Name", "Pickup Airport", "Arrival Date", "Arrival Time", "Arrival Airline", "Arrival Flight #"]
-    ].dropna(subset=["Arrival Date"])
+    ].fillna("")
     dropoff_df = fdf[fdf["Do you need airport drop off?"].eq("Yes")][
         ["Full Name", "Drop Off Airport", "Departure Date", "Departure Time", "Departure Airline", "Departure Flight #"]
-    ].dropna(subset=["Departure Date"])
+    ].fillna("")
     ac1, ac2 = st.columns(2)
     with ac1:
         st.markdown(f"**🛬 Pickups ({len(pickup_df)})**")
