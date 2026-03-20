@@ -33,9 +33,12 @@ def apply_styles():
         .stDataFrame th, .stDataFrame td { color: #ffffff !important; background: #12122a !important; }
         [data-testid="stDataFrame"] input::placeholder { color: #a0a0c0 !important; }
 
-        .metric-card { padding:22px 18px; border-radius:16px; color:white; text-align:center; box-shadow:0 8px 32px rgba(0,0,0,0.3); }
-        .metric-card h2 { font-size:2.4rem; margin:0; font-weight:700; color:#fff !important; }
-        .metric-card p { font-size:0.85rem; margin:5px 0 0; opacity:0.9; text-transform:uppercase; letter-spacing:1px; color:#fff !important; }
+        .metric-card { padding:14px 14px; border-radius:14px; color:white; text-align:center;
+                       box-shadow:0 6px 24px rgba(0,0,0,0.25); border:1px solid rgba(255,255,255,0.08);
+                       transition:all 0.3s ease; }
+        .metric-card:hover { transform:translateY(-4px); box-shadow:0 12px 36px rgba(0,0,0,0.35); }
+        .metric-card h2 { font-size:1.5rem; margin:0; font-weight:700; color:#fff !important; }
+        .metric-card p { font-size:0.7rem; margin:4px 0 0; opacity:0.85; text-transform:uppercase; letter-spacing:1.5px; color:#fff !important; }
         .mc-purple { background: linear-gradient(135deg, #667eea, #764ba2); }
         .mc-green  { background: linear-gradient(135deg, #00b09b, #96c93d); }
         .mc-blue   { background: linear-gradient(135deg, #4facfe, #00f2fe); }
