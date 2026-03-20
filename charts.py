@@ -201,7 +201,7 @@ def render_community(fdf):
         fig = px.bar(cc, x="Church", y="Count", title="⛪ Top Churches", color="Church",
                      color_discrete_sequence=COLORS, text_auto=True)
         fig.update_traces(marker_line_width=0, textposition="outside", textfont=dict(color="#ffffff", size=13))
-        fig.update_layout(**CHART_LAYOUT, showlegend=False, bargap=0.3, xaxis_tickangle=-45, height=350)
+        fig.update_layout(**{**CHART_LAYOUT, "height": 350}, showlegend=False, bargap=0.3, xaxis_tickangle=-45)
     else:
         fig = go.Figure()
         fig.update_layout(**CHART_LAYOUT, title="⛪ Top Churches",
