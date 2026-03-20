@@ -2,20 +2,6 @@ import streamlit as st
 import pandas as pd
 import plotly.express as px
 import plotly.graph_objects as go
-import base64, pathlib
-
-def img_to_base64(path):
-    return base64.b64encode(pathlib.Path(path).read_bytes()).decode()
-
-PICS = {k: img_to_base64(f"pics/{k}.jpg") for k in ["denver_skyline","mountains","conference"]}
-
-# --- Load background slideshow images ---
-import glob
-bg_files = sorted(glob.glob("pics/backgrounds/*"))
-bg_base64 = [img_to_base64(f) for f in bg_files if f.lower().endswith((".jpg",".jpeg",".png"))]
-# fallback to existing pics if no backgrounds uploaded yet
-if not bg_base64:
-    bg_base64 = [PICS[k] for k in ["downtown","mountains","capitol","sunset","conference"]]
 
 st.set_page_config(page_title="NACOG 2026 Dashboard", layout="wide", page_icon="🎉")
 
@@ -25,17 +11,14 @@ def check_password():
         st.session_state.authenticated = False
     if st.session_state.authenticated:
         return True
-    st.markdown(f"""
+    st.markdown("""
     <div style="display:flex;justify-content:center;align-items:center;min-height:60vh;">
-        <div style="background:linear-gradient(135deg,#1a1a2e,#16213e);padding:0;border-radius:20px;
-                    text-align:center;box-shadow:0 20px 60px rgba(0,0,0,0.3);max-width:420px;width:100%;overflow:hidden;">
-            <img src="data:image/jpeg;base64,{PICS['denver_skyline']}"
-                 style="width:100%;height:140px;object-fit:cover;display:block;" alt="Denver"/>
-            <div style="padding:30px 40px 40px;">
-                <h1 style="color:#e94560;margin:0 0 5px;font-size:1.8rem;">NACOG 2026</h1>
-                <p style="color:#a0a0b0;margin:0 0 5px;font-size:0.95rem;">Conference Dashboard</p>
-                <p style="color:#707090;margin:0 0 25px;font-size:0.8rem;">📍 Denver, Colorado</p>
-            </div>
+        <div style="background:linear-gradient(135deg,#1a1a2e,#16213e);padding:50px 40px;border-radius:20px;
+                    text-align:center;box-shadow:0 20px 60px rgba(0,0,0,0.3);max-width:420px;width:100%;">
+            <div style="font-size:3.5rem;margin-bottom:10px;">🎉</div>
+            <h1 style="color:#e94560;margin:0 0 5px;font-size:1.8rem;">NACOG 2026</h1>
+            <p style="color:#a0a0b0;margin:0 0 5px;font-size:0.95rem;">Conference Dashboard</p>
+            <p style="color:#707090;margin:0 0 25px;font-size:0.8rem;">📍 Denver, Colorado</p>
         </div>
     </div>
     """, unsafe_allow_html=True)
@@ -192,23 +175,17 @@ else:
     st.stop()
 latest_entry = df["Sold Date"].max().strftime("%B %d, %Y") if pd.notna(df["Sold Date"].max()) else "Unknown"
 
-# --- Header with Denver Banner ---
+# --- Header ---
 st.markdown(f"""
-<div style="position:relative;border-radius:18px;overflow:hidden;margin-bottom:25px;
-            box-shadow:0 10px 40px rgba(0,0,0,0.25);">
-    <img src="data:image/jpeg;base64,{PICS['denver_skyline']}"
-         style="width:100%;height:220px;object-fit:cover;display:block;" alt="Denver Skyline"/>
-    <div style="position:absolute;top:0;left:0;width:100%;height:100%;
-                background:linear-gradient(to right,rgba(15,12,41,0.85),rgba(48,43,99,0.6),rgba(36,36,62,0.4));"
-         class="banner-animate">        <div style="padding:45px 35px;">
-            <h1 style="color:#fff;font-size:2.4rem;margin:0;text-shadow:0 2px 10px rgba(0,0,0,0.3);">
-                🎉 NACOG 2026 Conference
-            </h1>
-            <p style="color:#c0c0e0;margin:8px 0 0;font-size:1.05rem;">
-                📍 Denver, Colorado &nbsp;•&nbsp; 📊 {len(df)} registrations &nbsp;•&nbsp; 🕐 Data as of: {latest_entry}
-            </p>
-        </div>
-    </div>
+<div style="background:linear-gradient(135deg,#0f0c29,#302b63,#24243e);
+            padding:35px;border-radius:18px;margin-bottom:25px;
+            box-shadow:0 10px 40px rgba(0,0,0,0.25);" class="banner-animate">
+    <h1 style="color:#fff;font-size:2.4rem;margin:0;text-shadow:0 2px 10px rgba(0,0,0,0.3);">
+        🎉 NACOG 2026 Conference
+    </h1>
+    <p style="color:#c0c0e0;margin:8px 0 0;font-size:1.05rem;">
+        📍 Denver, Colorado &nbsp;•&nbsp; 📊 {len(df)} registrations &nbsp;•&nbsp; 🕐 Data as of: {latest_entry}
+    </p>
 </div>
 """, unsafe_allow_html=True)
 
@@ -387,16 +364,12 @@ st.dataframe(
 )
 
 # --- Footer ---
-st.markdown(f"""
-<div style="position:relative;border-radius:16px;overflow:hidden;margin-top:20px;
+st.markdown("""
+<div style="background:linear-gradient(135deg,#0f0c29,#302b63,#24243e);
+            border-radius:16px;margin-top:20px;padding:20px;text-align:center;
             box-shadow:0 6px 20px rgba(0,0,0,0.12);" class="footer-animate">
-    <img src="data:image/jpeg;base64,{PICS['conference']}"
-         style="width:100%;height:120px;object-fit:cover;display:block;" alt="Conference"/>
-    <div style="position:absolute;top:0;left:0;width:100%;height:100%;
-                background:rgba(15,12,41,0.75);display:flex;align-items:center;justify-content:center;">
-        <p style="color:#c0c0e0;font-size:0.85rem;margin:0;">
-            NACOG 2026 Conference Dashboard &nbsp;•&nbsp; 📍 Denver, Colorado
-        </p>
-    </div>
+    <p style="color:#c0c0e0;font-size:0.85rem;margin:0;">
+        NACOG 2026 Conference Dashboard &nbsp;•&nbsp; 📍 Denver, Colorado
+    </p>
 </div>
 """, unsafe_allow_html=True)
