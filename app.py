@@ -85,12 +85,22 @@ st.markdown("""
     @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap');
     html, body, [class*="css"] { font-family: 'Inter', sans-serif; }
     .block-container { padding-top: 1.5rem; }
+
+    /* Dark theme */
+    .stApp { background-color: #0a0a1a; }
+    .stApp, .stApp p, .stApp span, .stApp label, .stApp div { color: #e0e0f0 !important; }
+    .stMarkdown, .stMarkdown p { color: #e0e0f0 !important; }
+    h1, h2, h3, h4, h5, h6 { color: #ffffff !important; }
+
+    /* Dataframe */
+    .stDataFrame { background: #12122a; border-radius: 12px; }
+
     .metric-card {
         padding: 22px 18px; border-radius: 16px; color: white; text-align: center;
-        box-shadow: 0 8px 32px rgba(0,0,0,0.15);
+        box-shadow: 0 8px 32px rgba(0,0,0,0.3);
     }
-    .metric-card h2 { font-size: 2.4rem; margin: 0; font-weight: 700; }
-    .metric-card p { font-size: 0.85rem; margin: 5px 0 0; opacity: 0.9; text-transform: uppercase; letter-spacing: 1px; }
+    .metric-card h2 { font-size: 2.4rem; margin: 0; font-weight: 700; color: #fff !important; }
+    .metric-card p { font-size: 0.85rem; margin: 5px 0 0; opacity: 0.9; text-transform: uppercase; letter-spacing: 1px; color: #fff !important; }
     .mc-purple { background: linear-gradient(135deg, #667eea, #764ba2); }
     .mc-green  { background: linear-gradient(135deg, #00b09b, #96c93d); }
     .mc-blue   { background: linear-gradient(135deg, #4facfe, #00f2fe); }
@@ -182,12 +192,12 @@ for col, cls, icon, label, val in [
 st.markdown('<div class="section-divider"></div>', unsafe_allow_html=True)
 
 CHART_LAYOUT = dict(
-    template="plotly_white",
+    template="plotly_dark",
     paper_bgcolor="rgba(0,0,0,0)",
-    plot_bgcolor="rgba(0,0,0,0)",
-    font=dict(family="Inter", color="#333"),
+    plot_bgcolor="rgba(18,18,42,0.5)",
+    font=dict(family="Inter", color="#e0e0f0"),
     margin=dict(l=20, r=20, t=50, b=20),
-    title_font=dict(size=16, color="#333"),
+    title_font=dict(size=16, color="#ffffff"),
 )
 
 # --- Row 1 ---
