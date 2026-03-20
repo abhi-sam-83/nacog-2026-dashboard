@@ -120,11 +120,22 @@ st.markdown("""
     }
     div[data-testid="stSidebar"] > div { background: #0a0a1a !important; }
     section[data-testid="stSidebar"] { background: #0a0a1a !important; }
-    div[data-testid="stSidebar"] * { color: #e0e0f0 !important; }
-    div[data-testid="stSidebar"] button { background: #667eea !important; color: #fff !important; border: none !important; }
+    div[data-testid="stSidebar"] * { color: #ffffff !important; }
+    div[data-testid="stSidebar"] button {
+        background: #667eea !important; color: #ffffff !important;
+        border: none !important; font-weight: 600 !important; font-size: 0.95rem !important;
+    }
     div[data-testid="stSidebar"] button:hover { background: #764ba2 !important; }
-    div[data-testid="stSidebar"] .stFileUploader label { color: #ffffff !important; font-weight: 600 !important; }
-    div[data-testid="stSidebar"] h5 { color: #ffffff !important; }
+    div[data-testid="stSidebar"] .stFileUploader label { color: #ffffff !important; font-weight: 600 !important; font-size: 0.95rem !important; }
+    div[data-testid="stSidebar"] .stFileUploader span { color: #ffffff !important; }
+    div[data-testid="stSidebar"] .stFileUploader small { color: #c0c0e0 !important; }
+    div[data-testid="stSidebar"] [data-testid="stFileUploaderDropzone"] {
+        background: rgba(102,126,234,0.15) !important;
+        border: 2px dashed #667eea !important;
+        color: #ffffff !important;
+    }
+    div[data-testid="stSidebar"] [data-testid="stFileUploaderDropzone"] * { color: #ffffff !important; }
+    div[data-testid="stSidebar"] h5 { color: #ffffff !important; font-size: 1rem !important; }
     .section-divider {
         height: 3px; border-radius: 2px; margin: 10px 0 20px;
         background: linear-gradient(90deg, #667eea, #764ba2, #f5576c, #fee140);
