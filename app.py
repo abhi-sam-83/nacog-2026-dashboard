@@ -339,7 +339,7 @@ st.markdown(f"""
     <div style="position:absolute;top:0;left:0;width:100%;height:100%;
                 background:rgba(15,12,41,0.75);display:flex;align-items:center;justify-content:center;">
         <p style="color:#c0c0e0;font-size:0.85rem;margin:0;">
-            NACOG 2026 Conference Dashboard &nbsp;•&nbsp; 📍 Denver, Colorado &nbsp;•&nbsp; Built with ❤️ using Streamlit & Plotly
+            NACOG 2026 Conference Dashboard &nbsp;•&nbsp; 📍 Denver, Colorado
         </p>
     </div>
 </div>
