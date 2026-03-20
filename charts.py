@@ -124,7 +124,7 @@ def render_row3(fdf):
         st.plotly_chart(fig, use_container_width=True)
 
 def render_row4(fdf):
-    r4c1, r4c2, r4c3 = st.columns(3)
+    r4c1, r4c2 = st.columns(2)
     with r4c1:
         meal_cols = [c for c in fdf.columns if (c.lower().startswith("food: do you wish to add meal plan") or c.lower().startswith("food: do you wish to add a meal plan")) and "amount" not in c.lower()]
         meal = pd.concat([fdf[c].dropna() for c in meal_cols])
@@ -136,24 +136,6 @@ def render_row4(fdf):
         fig.update_layout(**CHART_LAYOUT)
         st.plotly_chart(fig, use_container_width=True)
     with r4c2:
-        diet = pd.Series(dtype=str)
-        for c in [c for c in fdf.columns if "dietary restrictions" in c.lower()]:
-            d = fdf[c].dropna().astype(str)
-            d = d[d.str.strip() != ""]
-            diet = pd.concat([diet, d])
-        if len(diet) > 0:
-            dc = diet.value_counts().head(8).reset_index()
-            dc.columns = ["Restriction", "Count"]
-            fig = px.bar(dc, x="Count", y="Restriction", title="🥗 Dietary Restrictions", color="Restriction",
-                         color_discrete_sequence=COLORS, text_auto=True, orientation="h")
-            fig.update_traces(marker_line_width=0, textposition="outside")
-            fig.update_layout(**CHART_LAYOUT, showlegend=False, bargap=0.35)
-        else:
-            fig = go.Figure()
-            fig.update_layout(**CHART_LAYOUT, title="🥗 Dietary Restrictions",
-                              annotations=[dict(text="No data", showarrow=False, font=dict(size=16, color="#667eea"))])
-        st.plotly_chart(fig, use_container_width=True)
-    with r4c3:
         ch = fdf["Church Name"].dropna()
         ch = ch[ch.str.strip() != ""]
         if len(ch) > 0:
