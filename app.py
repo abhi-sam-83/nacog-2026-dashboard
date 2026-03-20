@@ -2,6 +2,7 @@ import streamlit as st
 import pandas as pd
 import plotly.express as px
 import plotly.graph_objects as go
+import pathlib
 
 st.set_page_config(page_title="NACOG 2026 Dashboard", layout="wide", page_icon="🎉")
 
@@ -36,55 +37,16 @@ def check_password():
 if not check_password():
     st.stop()
 
-# --- Custom CSS + Animations ---
-
-# Background slideshow
-# Background - disabled
-st.markdown("")
-
+# --- CSS ---
 st.markdown("""
 <style>
     @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap');
     html, body, [class*="css"] { font-family: 'Inter', sans-serif; }
     .block-container { padding-top: 1.5rem; }
-
-    @keyframes fadeInUp {
-        from { opacity: 0; transform: translateY(30px); }
-        to { opacity: 1; transform: translateY(0); }
-    }
-    @keyframes fadeIn {
-        from { opacity: 0; }
-        to { opacity: 1; }
-    }
-    @keyframes slideInLeft {
-        from { opacity: 0; transform: translateX(-40px); }
-        to { opacity: 1; transform: translateX(0); }
-    }
-    @keyframes pulse {
-        0%, 100% { transform: scale(1); }
-        50% { transform: scale(1.03); }
-    }
-    @keyframes shimmer {
-        0% { background-position: -200% center; }
-        100% { background-position: 200% center; }
-    }
-    @keyframes gradientMove {
-        0% { background-position: 0% 50%; }
-        50% { background-position: 100% 50%; }
-        100% { background-position: 0% 50%; }
-    }
-
     .metric-card {
         padding: 22px 18px; border-radius: 16px; color: white; text-align: center;
-        box-shadow: 0 8px 32px rgba(0,0,0,0.15); transition: transform 0.3s, box-shadow 0.3s;
-        animation: fadeInUp 0.6s ease-out both;
+        box-shadow: 0 8px 32px rgba(0,0,0,0.15);
     }
-    .metric-card:nth-child(1) { animation-delay: 0.1s; }
-    .metric-card:nth-child(2) { animation-delay: 0.2s; }
-    .metric-card:nth-child(3) { animation-delay: 0.3s; }
-    .metric-card:nth-child(4) { animation-delay: 0.4s; }
-    .metric-card:nth-child(5) { animation-delay: 0.5s; }
-    .metric-card:hover { transform: translateY(-6px) scale(1.02); box-shadow: 0 12px 40px rgba(0,0,0,0.25); }
     .metric-card h2 { font-size: 2.4rem; margin: 0; font-weight: 700; }
     .metric-card p { font-size: 0.85rem; margin: 5px 0 0; opacity: 0.9; text-transform: uppercase; letter-spacing: 1px; }
     .mc-purple { background: linear-gradient(135deg, #667eea, #764ba2); }
@@ -92,60 +54,14 @@ st.markdown("""
     .mc-blue   { background: linear-gradient(135deg, #4facfe, #00f2fe); }
     .mc-orange { background: linear-gradient(135deg, #f093fb, #f5576c); }
     .mc-pink   { background: linear-gradient(135deg, #fa709a, #fee140); }
-
-    .dash-header {
-        background: linear-gradient(135deg, #0f0c29, #302b63, #24243e);
-        padding: 30px 35px; border-radius: 18px; margin-bottom: 25px;
-        box-shadow: 0 10px 40px rgba(0,0,0,0.2);
-    }
-    .dash-header h1 { color: #fff; font-size: 2.2rem; margin: 0; }
-    .dash-header p { color: #a0a0c0; margin: 5px 0 0; font-size: 1rem; }
-
-    .chart-container {
-        background: #ffffff; border-radius: 16px; padding: 15px;
-        box-shadow: 0 4px 20px rgba(0,0,0,0.06); margin-bottom: 10px;
-    }
-
     div[data-testid="stSidebar"] {
         background: linear-gradient(180deg, #1a1a2e, #16213e);
     }
     div[data-testid="stSidebar"] * { color: #e0e0f0 !important; }
-
     .section-divider {
         height: 3px; border-radius: 2px; margin: 10px 0 20px;
-        background: linear-gradient(90deg, #667eea, #764ba2, #f5576c, #fee140, #667eea);
-        background-size: 200% auto;
-        animation: gradientMove 3s linear infinite;
+        background: linear-gradient(90deg, #667eea, #764ba2, #f5576c, #fee140);
     }
-
-    .banner-animate {
-        animation: fadeIn 1s ease-out;
-    }
-    .banner-animate h1 {
-        animation: slideInLeft 0.8s ease-out 0.3s both;
-    }
-    .banner-animate p {
-        animation: slideInLeft 0.8s ease-out 0.5s both;
-    }
-
-    .gallery-card {
-        transition: transform 0.3s, box-shadow 0.3s;
-        animation: fadeInUp 0.7s ease-out both;
-    }
-    .gallery-card:nth-child(1) { animation-delay: 0.1s; }
-    .gallery-card:nth-child(2) { animation-delay: 0.2s; }
-    .gallery-card:nth-child(3) { animation-delay: 0.3s; }
-    .gallery-card:nth-child(4) { animation-delay: 0.4s; }
-    .gallery-card:hover { transform: translateY(-8px) scale(1.02); box-shadow: 0 12px 35px rgba(0,0,0,0.2); }
-    .gallery-card img { transition: transform 0.5s; }
-    .gallery-card:hover img { transform: scale(1.08); }
-
-    .footer-animate {
-        animation: fadeIn 1s ease-out 0.5s both;
-    }
-
-    /* Plotly chart fade-in */
-    .stPlotlyChart { animation: fadeInUp 0.6s ease-out both; }
 </style>
 """, unsafe_allow_html=True)
 
@@ -173,16 +89,15 @@ elif local_csv.exists():
 else:
     st.info("📂 Please upload your GeneralRegistration.csv file using the sidebar.")
     st.stop()
+
 latest_entry = df["Sold Date"].max().strftime("%B %d, %Y") if pd.notna(df["Sold Date"].max()) else "Unknown"
 
 # --- Header ---
 st.markdown(f"""
 <div style="background:linear-gradient(135deg,#0f0c29,#302b63,#24243e);
             padding:35px;border-radius:18px;margin-bottom:25px;
-            box-shadow:0 10px 40px rgba(0,0,0,0.25);" class="banner-animate">
-    <h1 style="color:#fff;font-size:2.4rem;margin:0;text-shadow:0 2px 10px rgba(0,0,0,0.3);">
-        🎉 NACOG 2026 Conference
-    </h1>
+            box-shadow:0 10px 40px rgba(0,0,0,0.25);">
+    <h1 style="color:#fff;font-size:2.4rem;margin:0;">🎉 NACOG 2026 Conference</h1>
     <p style="color:#c0c0e0;margin:8px 0 0;font-size:1.05rem;">
         📍 Denver, Colorado &nbsp;•&nbsp; 📊 {len(df)} registrations &nbsp;•&nbsp; 🕐 Data as of: {latest_entry}
     </p>
@@ -277,6 +192,8 @@ with r2c2:
     fig.update_layout(**CHART_LAYOUT, showlegend=False, bargap=0.35)
     st.plotly_chart(fig, use_container_width=True)
 
+st.markdown('<div class="section-divider"></div>', unsafe_allow_html=True)
+
 # --- Row 3 ---
 r3c1, r3c2 = st.columns(2)
 
@@ -367,7 +284,7 @@ st.dataframe(
 st.markdown("""
 <div style="background:linear-gradient(135deg,#0f0c29,#302b63,#24243e);
             border-radius:16px;margin-top:20px;padding:20px;text-align:center;
-            box-shadow:0 6px 20px rgba(0,0,0,0.12);" class="footer-animate">
+            box-shadow:0 6px 20px rgba(0,0,0,0.12);">
     <p style="color:#c0c0e0;font-size:0.85rem;margin:0;">
         NACOG 2026 Conference Dashboard &nbsp;•&nbsp; 📍 Denver, Colorado
     </p>
