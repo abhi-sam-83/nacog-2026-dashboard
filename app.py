@@ -196,8 +196,8 @@ st.markdown("""
 COLORS = ["#667eea", "#f5576c", "#00b09b", "#fa709a", "#4facfe", "#fee140", "#96c93d", "#764ba2"]
 
 @st.cache_data(ttl=3600)
-def load_data():
-    df = pd.read_csv("GeneralRegistration.csv", encoding="utf-8-sig")
+def load_data(file):
+    df = pd.read_csv(file, encoding="utf-8-sig")
     df["Sold Date"] = pd.to_datetime(df["Sold Date"], errors="coerce")
     df["Ticket Price ($ Amount)"] = pd.to_numeric(df["Ticket Price ($ Amount)"], errors="coerce").fillna(0)
     df["Ticket Total ($ Amount)"] = pd.to_numeric(df["Ticket Total ($ Amount)"], errors="coerce").fillna(0)
@@ -206,7 +206,17 @@ def load_data():
     df["Full Name"] = df["Name (First Name)"].astype(str).str.strip() + " " + df["Name (Last Name)"].astype(str).str.strip()
     return df
 
-df = load_data()
+# --- CSV Upload ---
+uploaded = st.sidebar.file_uploader("📂 Upload GeneralRegistration.csv", type="csv")
+local_csv = pathlib.Path("GeneralRegistration.csv")
+
+if uploaded:
+    df = load_data(uploaded)
+elif local_csv.exists():
+    df = load_data(str(local_csv))
+else:
+    st.info("📂 Please upload your GeneralRegistration.csv file using the sidebar.")
+    st.stop()
 latest_entry = df["Sold Date"].max().strftime("%B %d, %Y") if pd.notna(df["Sold Date"].max()) else "Unknown"
 
 # --- Header with Denver Banner ---
