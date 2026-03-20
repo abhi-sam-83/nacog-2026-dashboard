@@ -61,15 +61,23 @@ def check_password():
         }
         .stTextInput input:focus { border-color: #667eea !important; box-shadow: 0 0 20px rgba(102,126,234,0.3) !important; }
         .stTextInput input::placeholder { color: #c0c0e0 !important; }
+        @keyframes letterPop { 0% { opacity:0; transform:translateY(20px) scale(0.5); } 100% { opacity:1; transform:translateY(0) scale(1); } }
+        @keyframes breathe { 0%,100% { letter-spacing:8px; } 50% { letter-spacing:14px; } }
+        .letter { display:inline-block; animation: letterPop 0.6s ease-out both; }
     </style>
-    <div style="text-align:center;padding-top:12vh;animation:fadeInUp 1s ease-out;">
-        <div style="animation:pulse 2.5s ease-in-out infinite;display:inline-block;font-size:3.5rem;margin-bottom:10px;">📊</div>
-        <h1 class="shimmer-title" style="font-size:3.5rem;font-weight:800;margin:0;text-shadow:0 4px 30px rgba(0,0,0,0.7);">NACOG 2026</h1>
-        <p class="shimmer-sub" style="font-size:1.5rem;font-weight:600;letter-spacing:3px;margin:8px 0;">✦ Conference Dashboard ✦</p>
-        <div style="display:flex;align-items:center;justify-content:center;gap:10px;margin:12px 0;animation:float 4s ease-in-out infinite;">
-            <span style="color:#f5576c;font-size:1.5rem;animation:sparkle 2s ease-in-out infinite;">✈</span>
-            <p style="color:#ffffff;margin:0;font-size:1.2rem;letter-spacing:1px;text-shadow:0 2px 15px rgba(0,0,0,0.8);">📍 Denver, Colorado &nbsp;•&nbsp; July 2026</p>
-            <span style="color:#fee140;font-size:1.5rem;animation:sparkle 2s ease-in-out 0.5s infinite;">⛰</span>
+    <div style="text-align:center;padding-top:10vh;animation:fadeInUp 1s ease-out;">
+        <div style="animation:pulse 2.5s ease-in-out infinite;display:inline-block;font-size:4rem;margin-bottom:10px;">📊</div>
+        <h1 style="font-size:5rem;font-weight:900;margin:0;text-shadow:0 4px 40px rgba(0,0,0,0.8),0 0 80px rgba(102,126,234,0.4);">
+            <span class="letter" style="color:#667eea;animation-delay:0.1s;">N</span><span class="letter" style="color:#f5576c;animation-delay:0.15s;">A</span><span class="letter" style="color:#00b09b;animation-delay:0.2s;">C</span><span class="letter" style="color:#fee140;animation-delay:0.25s;">O</span><span class="letter" style="color:#fa709a;animation-delay:0.3s;">G</span><span style="color:#fff;"> </span><span class="letter" style="color:#4facfe;animation-delay:0.4s;">2</span><span class="letter" style="color:#96c93d;animation-delay:0.45s;">0</span><span class="letter" style="color:#764ba2;animation-delay:0.5s;">2</span><span class="letter" style="color:#f5576c;animation-delay:0.55s;">6</span>
+        </h1>
+        <p style="font-size:1.8rem;font-weight:700;letter-spacing:6px;margin:12px 0;color:#fff;
+                  text-shadow:0 2px 20px rgba(0,0,0,0.8);animation:breathe 4s ease-in-out infinite;">
+            ✦ CONFERENCE DASHBOARD ✦</p>
+        <div style="display:flex;align-items:center;justify-content:center;gap:12px;margin:16px 0;animation:float 4s ease-in-out infinite;">
+            <span style="color:#f5576c;font-size:2rem;animation:sparkle 2s ease-in-out infinite;">✈</span>
+            <p style="color:#ffffff;margin:0;font-size:1.3rem;letter-spacing:2px;font-weight:600;
+                      text-shadow:0 2px 20px rgba(0,0,0,0.9);">📍 Denver, Colorado &nbsp;•&nbsp; July 2026</p>
+            <span style="color:#fee140;font-size:2rem;animation:sparkle 2s ease-in-out 0.5s infinite;">⛰</span>
         </div>
         <p style="color:#e0e0f0;font-size:0.85rem;margin:20px 0 0;letter-spacing:1px;text-shadow:0 2px 10px rgba(0,0,0,0.8);">🔒 AUTHORIZED ACCESS ONLY</p>
     </div>
