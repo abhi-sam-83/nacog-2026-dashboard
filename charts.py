@@ -33,22 +33,27 @@ def render_kpis(fdf):
     ]:
         col.markdown(f'<div class="metric-card {cls}"><h2>{icon} {val}</h2><p>{label}</p></div>', unsafe_allow_html=True)
 
-def render_row1(fdf):
-    r1c1, r1c2, r1c3 = st.columns(3)
-    with r1c1:
+def render_registration(fdf):
+    c1, c2, c3 = st.columns(3)
+    with c1:
         daily = fdf.dropna(subset=["Sold Date"]).groupby(fdf["Sold Date"].dt.date).size().reset_index(name="Count")
         daily.columns = ["Date", "Count"]
         daily["Cumulative"] = daily["Count"].cumsum()
-        fig = go.Figure()
-        fig.add_trace(go.Scatter(x=daily["Date"], y=daily["Cumulative"], fill="tozeroy",
-                                 line=dict(color="#667eea", width=3), fillcolor="rgba(102,126,234,0.15)",
-                                 text=daily["Cumulative"], textposition="top center", textfont=dict(color="#ffffff"),
-                                 mode="lines+text"))
-        fig.update_layout(**CHART_LAYOUT, title="📈 Registration Growth",
-                         xaxis=dict(tickfont=dict(color="#ffffff"), title_font=dict(color="#ffffff"), color="#ffffff"),
-                         yaxis=dict(tickfont=dict(color="#ffffff"), title_font=dict(color="#ffffff"), color="#ffffff"))
+        fig = px.bar(daily, x="Date", y="Cumulative", title="📈 Registration Growth",
+                     color_discrete_sequence=["#667eea"], text_auto=True)
+        fig.update_traces(textposition="outside", textfont=dict(color="#ffffff"))
+        fig.update_layout(**CHART_LAYOUT, showlegend=False,
+                         xaxis=dict(tickfont=dict(color="#ffffff"), color="#ffffff"),
+                         yaxis=dict(tickfont=dict(color="#ffffff"), color="#ffffff"))
         st.plotly_chart(fig, use_container_width=True)
-    with r1c2:
+    with c2:
+        sc = fdf["Address (State)"].value_counts().reset_index()
+        sc.columns = ["State", "Count"]
+        fig = px.choropleth(sc, locations="State", locationmode="USA-states", color="Count", scope="usa",
+                            title="🗺️ By State", color_continuous_scale=["#e0e7ff", "#667eea", "#302b63"])
+        fig.update_layout(**CHART_LAYOUT, geo=dict(bgcolor="rgba(0,0,0,0)", lakecolor="rgba(0,0,0,0)"), coloraxis_showscale=False)
+        st.plotly_chart(fig, use_container_width=True)
+    with c3:
         lc = fdf["Ticket Level"].value_counts().reset_index()
         lc.columns = ["Ticket Level", "Count"]
         fig = px.bar(lc, x="Ticket Level", y="Count", title="🎫 Ticket Level",
@@ -56,25 +61,17 @@ def render_row1(fdf):
         fig.update_traces(marker_line_width=0, textposition="outside")
         fig.update_layout(**CHART_LAYOUT, showlegend=False, bargap=0.4)
         st.plotly_chart(fig, use_container_width=True)
-    with r1c3:
+
+def render_demographics(fdf):
+    c1, c2, c3 = st.columns(3)
+    with c1:
         g = fdf["Gender"].value_counts().reset_index()
         g.columns = ["Gender", "Count"]
         fig = px.bar(g, x="Gender", y="Count", title="👥 Gender", color="Gender", color_discrete_sequence=COLORS, text_auto=True)
         fig.update_traces(marker_line_width=0, textposition="outside", width=0.3)
         fig.update_layout(**CHART_LAYOUT, showlegend=False, bargap=0.6)
         st.plotly_chart(fig, use_container_width=True)
-
-def render_row2(fdf):
-    r2c1, r2c2, r2c3 = st.columns(3)
-    with r2c1:
-        a = fdf["Age Group"].fillna("Unknown").value_counts().reset_index()
-        a.columns = ["Age Group", "Count"]
-        fig = px.bar(a, x="Count", y="Age Group", title="📊 Age Groups", color="Age Group",
-                     color_discrete_sequence=COLORS, text_auto=True, orientation="h")
-        fig.update_traces(marker_line_width=0, textposition="outside")
-        fig.update_layout(**CHART_LAYOUT, showlegend=False, bargap=0.35)
-        st.plotly_chart(fig, use_container_width=True)
-    with r2c2:
+    with c2:
         sessions = {
             "General": fdf["Which sessions would you like to attend? (General Session)"].eq("Yes").sum() +
                        fdf.get("Session Preference (General Session)", pd.Series(dtype=str)).eq("Yes").sum(),
@@ -91,12 +88,13 @@ def render_row2(fdf):
         fig.update_traces(marker_line_width=0, textposition="outside")
         fig.update_layout(**CHART_LAYOUT, showlegend=False, bargap=0.4)
         st.plotly_chart(fig, use_container_width=True)
-    with r2c3:
-        sc = fdf["Address (State)"].value_counts().reset_index()
-        sc.columns = ["State", "Count"]
-        fig = px.choropleth(sc, locations="State", locationmode="USA-states", color="Count", scope="usa",
-                            title="🗺️ By State", color_continuous_scale=["#e0e7ff", "#667eea", "#302b63"])
-        fig.update_layout(**CHART_LAYOUT, geo=dict(bgcolor="rgba(0,0,0,0)", lakecolor="rgba(0,0,0,0)"), coloraxis_showscale=False)
+    with c3:
+        a = fdf["Age Group"].fillna("Unknown").value_counts().reset_index()
+        a.columns = ["Age Group", "Count"]
+        fig = px.bar(a, x="Count", y="Age Group", title="📊 Age Groups", color="Age Group",
+                     color_discrete_sequence=COLORS, text_auto=True, orientation="h")
+        fig.update_traces(marker_line_width=0, textposition="outside")
+        fig.update_layout(**CHART_LAYOUT, showlegend=False, bargap=0.35)
         st.plotly_chart(fig, use_container_width=True)
 
 def render_payment(fdf):

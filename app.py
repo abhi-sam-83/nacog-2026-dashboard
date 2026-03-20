@@ -3,7 +3,7 @@ import pandas as pd
 from auth import check_password
 from styles import apply_styles
 from data_loader import get_data
-from charts import (render_kpis, render_row1, render_row2, render_payment,
+from charts import (render_kpis, render_registration, render_demographics, render_payment,
                     render_hotel, render_travel, render_airport,
                     render_food, render_community, render_table)
 
@@ -51,8 +51,11 @@ divider = '<div class="section-divider"></div>'
 render_kpis(fdf)
 
 st.markdown(section.format("📊 Registration Overview"), unsafe_allow_html=True)
-render_row1(fdf)
-render_row2(fdf)
+render_registration(fdf)
+
+st.markdown(divider, unsafe_allow_html=True)
+st.markdown(section.format("👥 Demographics"), unsafe_allow_html=True)
+render_demographics(fdf)
 
 st.markdown(divider, unsafe_allow_html=True)
 st.markdown(section.format("💳 Payment"), unsafe_allow_html=True)
