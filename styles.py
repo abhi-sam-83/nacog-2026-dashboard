@@ -7,22 +7,18 @@ def apply_styles():
         html, body, [class*="css"] { font-family: 'Inter', sans-serif; }
         .block-container { padding-top: 1.5rem; }
 
-        /* Dark theme */
-        .stApp { background-color: #0a0a1a; }
-        .stApp, .stApp p, .stApp span, .stApp label, .stApp div,
-        .stApp li, .stApp td, .stApp th, .stApp caption,
-        .stApp input, .stApp textarea, .stApp select,
-        .stMarkdown, .stMarkdown p, .stMarkdown span,
-        [data-testid="stMarkdownContainer"] p,
-        [data-testid="stMarkdownContainer"] span,
+        /* Dark theme - nuclear white override */
+        .stApp { background-color: #0a0a1a; color: #ffffff !important; }
+        .stApp *, .stMarkdown *, [data-testid="stMarkdownContainer"] *,
         [data-testid="stMetricValue"], [data-testid="stMetricLabel"],
-        [data-testid="stMetricDelta"], .stDataFrame,
+        [data-testid="stMetricDelta"], [data-testid="stTable"] *,
+        .stAlert *, .stDataFrame *, [data-testid="stDataFrame"] *,
         .stSelectbox label, .stMultiSelect label,
-        .stFileUploader label, .stTextInput label { color: #ffffff !important; }
-        h1, h2, h3, h4, h5, h6 { color: #ffffff !important; }
-        .stDataFrame td, .stDataFrame th { color: #ffffff !important; }
-        [data-testid="stTable"] { color: #ffffff !important; }
-        .stAlert p { color: #ffffff !important; }
+        .stFileUploader label, .stTextInput label,
+        [data-testid="stWidgetLabel"] *, [data-testid="stText"],
+        [data-testid="column"] *, [data-testid="stVerticalBlock"] *,
+        h1, h2, h3, h4, h5, h6, p, span, label, div, li, td, th, caption,
+        strong, em, b, i, a { color: #ffffff !important; }
 
         .stTextInput input, .stTextArea textarea {
             color: #ffffff !important; background: #1a1a3a !important;
