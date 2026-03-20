@@ -41,10 +41,12 @@ def render_row1(fdf):
         daily["Cumulative"] = daily["Count"].cumsum()
         fig = go.Figure()
         fig.add_trace(go.Scatter(x=daily["Date"], y=daily["Cumulative"], fill="tozeroy",
-                                 line=dict(color="#667eea", width=3), fillcolor="rgba(102,126,234,0.15)"))
+                                 line=dict(color="#667eea", width=3), fillcolor="rgba(102,126,234,0.15)",
+                                 text=daily["Cumulative"], textposition="top center", textfont=dict(color="#ffffff"),
+                                 mode="lines+text"))
         fig.update_layout(**CHART_LAYOUT, title="📈 Registration Growth",
-                         xaxis=dict(tickfont=dict(color="#ffffff"), title_font=dict(color="#ffffff")),
-                         yaxis=dict(tickfont=dict(color="#ffffff"), title_font=dict(color="#ffffff")))
+                         xaxis=dict(tickfont=dict(color="#ffffff"), title_font=dict(color="#ffffff"), color="#ffffff"),
+                         yaxis=dict(tickfont=dict(color="#ffffff"), title_font=dict(color="#ffffff"), color="#ffffff"))
         st.plotly_chart(fig, use_container_width=True)
     with r1c2:
         lc = fdf["Ticket Level"].value_counts().reset_index()
