@@ -11,7 +11,7 @@ def check_password():
         @keyframes pulse { 0%,100% { transform:scale(1); } 50% { transform:scale(1.08); } }
         @keyframes shimmer { 0% { background-position:200% center; } 100% { background-position:-200% center; } }
         @keyframes float { 0%,100% { transform:translateY(0); } 50% { transform:translateY(-10px); } }
-        @keyframes glow { 0%,100% { text-shadow:0 0 10px rgba(102,126,234,0.3); } 50% { text-shadow:0 0 30px rgba(102,126,234,0.6), 0 0 60px rgba(245,87,108,0.3); } }
+        @keyframes glow { 0%,100% { text-shadow:0 0 20px rgba(102,126,234,0.5); } 50% { text-shadow:0 0 40px rgba(102,126,234,0.8), 0 0 80px rgba(245,87,108,0.4); } }
         @keyframes sparkle { 0%,100% { opacity:0.4; } 50% { opacity:1; } }
         @keyframes bgCrossfade {
             0%,11%   { background-image: url('https://images.unsplash.com/photo-1546587348-d12660c30c50?w=1600&q=80'); }
@@ -29,15 +29,12 @@ def check_password():
         }
         .stApp::before {
             content:""; position:fixed; top:0; left:0; width:100%; height:100%;
-            background: linear-gradient(135deg, rgba(10,10,30,0.45), rgba(48,43,99,0.3), rgba(10,10,30,0.45));
+            background: rgba(0,0,0,0.3);
             z-index:0;
         }
         .stApp > * { position:relative; z-index:1; }
         [data-testid="stSidebar"] { display:none !important; }
         header { display:none !important; }
-        .login-card { animation: fadeInUp 1s ease-out; transition: all 0.4s ease; }
-        .login-card:hover { transform: translateY(-8px); box-shadow: 0 35px 90px rgba(102,126,234,0.3) !important; }
-        .login-emoji { animation: pulse 2.5s ease-in-out infinite; display:inline-block; }
         .shimmer-title {
             background: linear-gradient(90deg, #ff4d6d, #667eea, #f5576c, #fee140, #ff4d6d);
             background-size: 400% auto;
@@ -50,7 +47,6 @@ def check_password():
             -webkit-background-clip: text; -webkit-text-fill-color: transparent;
             animation: shimmer 6s linear infinite;
         }
-        .login-divider { height:3px; border-radius:2px; margin:0; background: linear-gradient(90deg, transparent, #667eea, #f5576c, #fee140, transparent); }
         .login-btn button {
             background: linear-gradient(135deg, #667eea, #764ba2) !important;
             color: #fff !important; border: none !important;
@@ -59,33 +55,23 @@ def check_password():
         }
         .login-btn button:hover { background: linear-gradient(135deg, #764ba2, #f5576c) !important; box-shadow: 0 8px 25px rgba(102,126,234,0.4) !important; }
         .stTextInput input {
-            background: rgba(255,255,255,0.08) !important; border: 2px solid rgba(102,126,234,0.4) !important;
+            background: rgba(0,0,0,0.4) !important; border: 2px solid rgba(102,126,234,0.5) !important;
             border-radius: 12px !important; color: #fff !important; padding: 12px 16px !important;
-            font-size: 1rem !important; text-align: center !important;
+            font-size: 1rem !important; text-align: center !important; backdrop-filter: blur(10px) !important;
         }
         .stTextInput input:focus { border-color: #667eea !important; box-shadow: 0 0 20px rgba(102,126,234,0.3) !important; }
-        .stTextInput input::placeholder { color: #a0a0c0 !important; }
+        .stTextInput input::placeholder { color: #c0c0e0 !important; }
     </style>
-    <div style="display:flex;justify-content:center;align-items:center;min-height:75vh;">
-        <div class="login-card" style="background:rgba(10,10,30,0.88);backdrop-filter:blur(24px);-webkit-backdrop-filter:blur(24px);
-                    padding:0;border-radius:24px;text-align:center;
-                    box-shadow:0 25px 70px rgba(0,0,0,0.5);max-width:360px;width:100%;
-                    border:1px solid rgba(102,126,234,0.2);overflow:hidden;">
-            <div style="padding:25px 30px 8px;">
-                <div class="login-emoji" style="font-size:3rem;margin-bottom:8px;">📊</div>
-                <h1 class="shimmer-title" style="margin:0 0 6px;font-size:2.2rem;font-weight:800;">NACOG 2026</h1>
-                <p class="shimmer-sub" style="margin:0 0 8px;font-size:1.1rem;font-weight:600;letter-spacing:2px;">✦ Conference Dashboard ✦</p>
-                <div style="display:flex;align-items:center;justify-content:center;gap:8px;margin:6px 0 3px;animation:float 4s ease-in-out infinite;">
-                    <span style="color:#f5576c;font-size:1.1rem;animation:sparkle 2s ease-in-out infinite;">✈</span>
-                    <p style="color:#e0e0f0;margin:0;font-size:0.9rem;letter-spacing:1px;">📍 Denver, CO &nbsp;•&nbsp; July 2026</p>
-                    <span style="color:#fee140;font-size:1.1rem;animation:sparkle 2s ease-in-out 0.5s infinite;">⛰</span>
-                </div>
-            </div>
-            <div class="login-divider"></div>
-            <div style="padding:10px 30px 20px;">
-                <p style="color:#c0c0e0;font-size:0.8rem;margin:0 0 8px;letter-spacing:0.5px;">🔒 AUTHORIZED ACCESS ONLY</p>
-            </div>
+    <div style="text-align:center;padding-top:12vh;animation:fadeInUp 1s ease-out;">
+        <div style="animation:pulse 2.5s ease-in-out infinite;display:inline-block;font-size:3.5rem;margin-bottom:10px;">📊</div>
+        <h1 class="shimmer-title" style="font-size:3.5rem;font-weight:800;margin:0;text-shadow:0 4px 30px rgba(0,0,0,0.7);">NACOG 2026</h1>
+        <p class="shimmer-sub" style="font-size:1.5rem;font-weight:600;letter-spacing:3px;margin:8px 0;">✦ Conference Dashboard ✦</p>
+        <div style="display:flex;align-items:center;justify-content:center;gap:10px;margin:12px 0;animation:float 4s ease-in-out infinite;">
+            <span style="color:#f5576c;font-size:1.5rem;animation:sparkle 2s ease-in-out infinite;">✈</span>
+            <p style="color:#ffffff;margin:0;font-size:1.2rem;letter-spacing:1px;text-shadow:0 2px 15px rgba(0,0,0,0.8);">📍 Denver, Colorado &nbsp;•&nbsp; July 2026</p>
+            <span style="color:#fee140;font-size:1.5rem;animation:sparkle 2s ease-in-out 0.5s infinite;">⛰</span>
         </div>
+        <p style="color:#e0e0f0;font-size:0.85rem;margin:20px 0 0;letter-spacing:1px;text-shadow:0 2px 10px rgba(0,0,0,0.8);">🔒 AUTHORIZED ACCESS ONLY</p>
     </div>
     """, unsafe_allow_html=True)
     col1, col2, col3 = st.columns([1.2, 1, 1.2])
