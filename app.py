@@ -45,7 +45,11 @@ with st.sidebar:
 fdf = df[df["Status"].isin(statuses) & df["Ticket Level"].isin(ticket_levels) & df["Gender"].isin(genders)]
 
 # Render dashboard
-section = '<h2 style="color:#ffffff;margin:25px 0 10px;border-left:4px solid #667eea;padding-left:12px;">{}</h2>'
+section = '''<div style="margin:20px 0 10px;padding:10px 16px;border-radius:12px;
+    background:linear-gradient(135deg,rgba(102,126,234,0.15),rgba(118,75,162,0.1));
+    border-left:4px solid #667eea;display:flex;align-items:center;gap:8px;">
+    <span style="font-size:1.1rem;color:#ffffff;font-weight:600;letter-spacing:0.5px;">{}</span>
+</div>'''
 divider = '<div class="section-divider"></div>'
 
 render_kpis(fdf)
