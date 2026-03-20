@@ -192,10 +192,10 @@ COLORS = ["#667eea", "#f5576c", "#00b09b", "#fa709a", "#4facfe", "#fee140", "#96
 def load_data(file):
     df = pd.read_csv(file, encoding="utf-8-sig")
     df["Sold Date"] = pd.to_datetime(df["Sold Date"], errors="coerce")
-    df["Ticket Price ($ Amount)"] = df["Ticket Price ($ Amount)"].astype(str).str.replace("$","",regex=False).str.replace(",","",regex=False)
-    df["Ticket Price ($ Amount)"] = pd.to_numeric(df["Ticket Price ($ Amount)"], errors="coerce").fillna(0)
-    df["Ticket Total ($ Amount)"] = df["Ticket Total ($ Amount)"].astype(str).str.replace("$","",regex=False).str.replace(",","",regex=False)
-    df["Ticket Total ($ Amount)"] = pd.to_numeric(df["Ticket Total ($ Amount)"], errors="coerce").fillna(0)
+    # Ticket Price/Total already numeric in some CSVs, strip $ if string
+    for col in ["Ticket Price ($ Amount)", "Ticket Total ($ Amount)"]:
+        df[col] = df[col].astype(str).str.replace("$","",regex=False).str.replace(",","",regex=False)
+        df[col] = pd.to_numeric(df[col], errors="coerce").fillna(0)
     df["Hotel Cost"] = df["How many hotel rooms do you need? ($ Amount)"].astype(str).str.replace("$","",regex=False).str.replace(",","",regex=False)
     df["Hotel Cost"] = pd.to_numeric(df["Hotel Cost"], errors="coerce").fillna(0)
     df["Meal Cost"] = df.get("Food: Do you wish to add a meal plan? ($ Amount)", pd.Series(dtype=str)).astype(str).str.replace("$","",regex=False).str.replace(",","",regex=False)
@@ -249,8 +249,10 @@ fdf = df[mask]
 # --- KPI Cards ---
 total_reg = len(fdf)
 total_revenue = fdf["Ticket Total ($ Amount)"].sum()
+meal_revenue = fdf["Meal Cost"].sum()
+hotel_revenue = fdf["Hotel Cost"].sum()
 paid = (fdf["Status"] == "completed").sum()
-pending = total_reg - paid
+pending = (fdf["Status"] == "pending offline payment").sum()
 hotel_rooms = fdf["Hotel Cost"].gt(0).sum()
 
 c1, c2, c3, c4, c5 = st.columns(5)
@@ -323,10 +325,14 @@ with r2c1:
 
 with r2c2:
     sessions = {
-        "General": fdf["Which sessions would you like to attend? (General Session)"].eq("Yes").sum(),
-        "English": fdf["Which sessions would you like to attend? (English Session)"].eq("Yes").sum(),
-        "Ladies": fdf["Which sessions would you like to attend? (Ladies Session)"].eq("Yes").sum(),
-        "Children's": fdf["Which sessions would you like to attend? (Childrens Session)"].eq("Yes").sum(),
+        "General": fdf["Which sessions would you like to attend? (General Session)"].eq("Yes").sum() +
+                   fdf.get("Session Preference (General Session)", pd.Series(dtype=str)).eq("Yes").sum(),
+        "English": fdf["Which sessions would you like to attend? (English Session)"].eq("Yes").sum() +
+                   fdf.get("Session Preference (English Session)", pd.Series(dtype=str)).eq("Yes").sum(),
+        "Ladies": fdf["Which sessions would you like to attend? (Ladies Session)"].eq("Yes").sum() +
+                  fdf.get("Session Preference (Ladies Session)", pd.Series(dtype=str)).eq("Yes").sum(),
+        "Children's": fdf["Which sessions would you like to attend? (Childrens Session)"].eq("Yes").sum() +
+                      fdf.get("Session Preference (Childrens Session)", pd.Series(dtype=str)).eq("Yes").sum(),
     }
     sess_df = pd.DataFrame(list(sessions.items()), columns=["Session", "Count"])
     fig = px.bar(sess_df, x="Session", y="Count", title="📋 Sessions",
@@ -394,8 +400,12 @@ with r4c1:
     st.plotly_chart(fig, use_container_width=True)
 
 with r4c2:
-    diet = fdf["Any dietary restrictions?"].dropna()
-    diet = diet[diet.str.strip() != ""]
+    diet_cols = [c for c in fdf.columns if "dietary restrictions" in c.lower()]
+    diet = pd.Series(dtype=str)
+    for c in diet_cols:
+        d = fdf[c].dropna()
+        d = d[d.str.strip() != ""]
+        diet = pd.concat([diet, d])
     if len(diet) > 0:
         diet_counts = diet.value_counts().head(8).reset_index()
         diet_counts.columns = ["Restriction", "Count"]
@@ -434,7 +444,7 @@ with r5c1:
         nights = {}
         for c in night_cols:
             day = c.split("(")[-1].replace(")", "").strip()
-            nights[day] = fdf[c].notna().sum() - (fdf[c] == "").sum()
+            nights[day] = (fdf[c] == "Yes").sum()
         nights_df = pd.DataFrame(list(nights.items()), columns=["Night", "Bookings"])
         nights_df = nights_df[nights_df["Bookings"] > 0]
         fig = px.bar(nights_df, x="Night", y="Bookings", title="🌙 Hotel Nights Booked",
