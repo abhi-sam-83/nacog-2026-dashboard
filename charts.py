@@ -57,8 +57,8 @@ def render_row1(fdf):
         g = fdf["Gender"].value_counts().reset_index()
         g.columns = ["Gender", "Count"]
         fig = px.bar(g, x="Gender", y="Count", title="👥 Gender", color="Gender", color_discrete_sequence=COLORS, text_auto=True)
-        fig.update_traces(marker_line_width=0, textposition="outside")
-        fig.update_layout(**CHART_LAYOUT, showlegend=False, bargap=0.4)
+        fig.update_traces(marker_line_width=0, textposition="outside", width=0.3)
+        fig.update_layout(**CHART_LAYOUT, showlegend=False, bargap=0.6)
         st.plotly_chart(fig, use_container_width=True)
 
 def render_row2(fdf):
