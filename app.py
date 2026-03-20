@@ -53,6 +53,9 @@ render_kpis(fdf)
 st.markdown(section.format("📊 Registration Overview"), unsafe_allow_html=True)
 render_row1(fdf)
 render_row2(fdf)
+
+st.markdown(divider, unsafe_allow_html=True)
+st.markdown(section.format("💳 Payment"), unsafe_allow_html=True)
 render_payment(fdf)
 
 st.markdown(divider, unsafe_allow_html=True)
