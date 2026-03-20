@@ -369,16 +369,34 @@ with r3c3:
 # --- Registrant Table ---
 st.markdown('<div class="section-divider"></div>', unsafe_allow_html=True)
 st.markdown("### 📋 Registrant Details")
+
 display_cols = ["Full Name", "Email", "Gender", "Age Group", "Ticket Level", "Status",
                 "Address (City)", "Address (State)", "Ticket Total ($ Amount)", "Sold Date"]
-st.dataframe(
-    fdf[display_cols].sort_values("Sold Date", ascending=False),
-    use_container_width=True, height=450,
-    column_config={
-        "Ticket Total ($ Amount)": st.column_config.NumberColumn(format="$%.2f"),
-        "Sold Date": st.column_config.DateColumn(format="MMM DD, YYYY"),
-    }
-)
+table_df = fdf[display_cols].sort_values("Sold Date", ascending=False).reset_index(drop=True)
+
+search = st.text_input("🔍 Search registrants", "", placeholder="Type name, email, city...")
+if search:
+    mask = table_df.apply(lambda row: search.lower() in str(row.values).lower(), axis=1)
+    table_df = table_df[mask]
+
+st.markdown(f"Showing {len(table_df)} registrants")
+
+html_table = table_df.to_html(index=False, escape=True, classes="reg-table")
+st.markdown(f"""
+<style>
+    .reg-table {{ width: 100%; border-collapse: collapse; font-size: 0.85rem; }}
+    .reg-table th {{
+        background: #667eea; color: #fff; padding: 10px 12px;
+        text-align: left; font-weight: 600; position: sticky; top: 0;
+    }}
+    .reg-table td {{ padding: 8px 12px; color: #ffffff; border-bottom: 1px solid #1a1a3a; }}
+    .reg-table tr:hover td {{ background: rgba(102,126,234,0.15); }}
+    .reg-table tr:nth-child(even) td {{ background: rgba(255,255,255,0.03); }}
+</style>
+<div style="max-height:450px;overflow-y:auto;border-radius:12px;border:1px solid #1a1a3a;">
+{html_table}
+</div>
+""", unsafe_allow_html=True)
 
 # --- Footer ---
 st.markdown("""
